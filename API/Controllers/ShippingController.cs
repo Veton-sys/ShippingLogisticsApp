@@ -19,12 +19,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<List<Courier>> CalculateCourierPrices(PackageDto packageDto)
+        public ActionResult<List<Courier>> CalculateCourierPrices([FromBody]PackageDto packageDto)
         {
             return Ok(_courierService.GetCourierPrices(packageDto));
         }
 
-        [HttpPost]
+        [HttpPost("make-order")]
         public void MakeOrder(OrderDto orderDto)
         {
             _courierService.MakeOrder(orderDto);

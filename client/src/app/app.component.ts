@@ -8,16 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'client';
-  weathers: any;
 
   constructor(private http: HttpClient){
 
   }
   ngOnInit(): void {
-    this.http.get('https://localhost:5001/weatherforecast').subscribe({
-      next: response => this.weathers = response,
-      error: error => console.log(error),
-      complete: () => console.log("request completed") 
-    })
+
   }
 }

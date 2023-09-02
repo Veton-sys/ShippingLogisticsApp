@@ -1,0 +1,22 @@
+<div class="container mt-3">
+    <form [formGroup]="parcelForm" class="d-flex mb-3" (ngSubmit)="parcelForm.valid && getCourierPrices()" autocomplete="off">
+        <app-text-input [formControl]="$any(parcelForm.controls['weight'])" [label]="'Weight'"></app-text-input>
+        <app-text-input [formControl]="$any(parcelForm.controls['height'])" [label]="'Height'"></app-text-input>
+        <app-text-input [formControl]="$any(parcelForm.controls['width'])" [label]="'Width'"></app-text-input>
+        <app-text-input [formControl]="$any(parcelForm.controls['depth'])" [label]="'Depth'"></app-text-input>
+        
+       
+        <div class="row" *ngIf="validationErrors">
+            <ul class="text-danger">
+                <li *ngFor="let error of validationErrors">{{error}}</li>
+            </ul>
+        </div>
+
+        <button [disabled]="!parcelForm.valid" class="btn btn-primary me-2" type="submit">Check parcel prices</button>
+        
+    </form>
+</div>
+
+<div class="container mt-3" *ngIf="couriers">
+    <app-courier-list [couriers]="couriers"></app-courier-list>
+</div>

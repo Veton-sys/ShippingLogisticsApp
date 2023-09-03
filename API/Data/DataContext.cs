@@ -12,6 +12,5 @@ namespace API.Data
         }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Package> Packages { get; set; }
-        public DbSet<Courier> Couriers { get; set; }
     }
 }

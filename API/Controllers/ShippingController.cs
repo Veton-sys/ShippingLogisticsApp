@@ -30,8 +30,14 @@ namespace API.Controllers
         public async Task<ActionResult<ServiceResponse<bool>>> MakeOrder(OrderDto orderDto)
         {
             //validation
-            
+            // maybe global exception handler
+            //maybe unit test per dicka shif
             var result = await _courierService.MakeOrder(orderDto);
+            if(!result.Success)
+            {
+                result.Message = "Order couldn't be placed";
+                return BadRequest(result);
+            }
             return Ok(result);
         }
     }

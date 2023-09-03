@@ -14,7 +14,6 @@ export class CourierListComponent {
 
   @Input() couriers: Courier[] = [];
   @Input() parcel: Parcel | undefined;
-  @Input() parcelValid: boolean | undefined;
 
   baseUrl = 'https://localhost:5001/api/';
 

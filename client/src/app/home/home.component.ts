@@ -9,22 +9,23 @@ import { Courier } from '../_models/courier';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  selectedValue=1;
+  selectedValue = 1;
   couriers: Courier[] = [];
   parcelForm: FormGroup = new FormGroup({});
   validationErrors: string[] | undefined;
-
+  
   constructor(private courierService: CourierService, private fb: FormBuilder) {
   }
 
 
   ngOnInit(): void {
     this.initializeForm();
+    this.detectFormChange();
   }
 
   initializeForm() {
     this.parcelForm = this.fb.group({
-      weight: ['', [Validators.required, Validators.min(1),Validators.max(30)]],
+      weight: [1, [Validators.required, Validators.min(1), Validators.max(30)]],
       width: ['', [Validators.required, Validators.min(1)]],
       height: ['', [Validators.required, Validators.min(1)]],
       depth: ['', [Validators.required, Validators.min(1)]],
@@ -38,5 +39,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  detectFormChange() {
+    this.parcelForm.valueChanges.subscribe(res => {
+      console.log(res);
+      this.getCourierPrices();
+    })
+  }
 }
 

@@ -1,58 +1,51 @@
 <div class="container row">
-    <div class="col-7 mt-3">
+    <div class="col-5 mt-3">
         <h3>Package information:</h3>
 
         <form [formGroup]="parcelForm" class="row mb-3" (ngSubmit)="parcelForm.valid && getCourierPrices()"
             autocomplete="off">
 
             <div>
-                <label>Weight in kg: {{parcelForm.get('weight')?.value}}</label>
+                <span class="fw-bold">Weight in kg: {{parcelForm.get('weight')?.value}}</span>
                 <mat-slider class="w-100" min="1" max="30" color="accent" discrete="true">
                     <input matSliderThumb [formControl]="$any(parcelForm.controls['weight'])">
                 </mat-slider>
             </div>
-            <div class="row mt-5">
-                <h4>Package dimensions:</h4>
-                <div class="col-3">
+
+            <div class="row mt-2">
+                <div>
+                    <span class="fw-bold">{{parcelForm.get('height')?.value}} x
+                        {{parcelForm.get('width')?.value}} x
+                        {{parcelForm.get('depth')?.value}} cm³</span>
+                </div>
+                <div class="col-4">
                     <app-text-input [formControl]="$any(parcelForm.controls['height'])"
                         [label]="'Height'"></app-text-input>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <app-text-input [formControl]="$any(parcelForm.controls['width'])"
                         [label]="'Width'"></app-text-input>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <app-text-input [formControl]="$any(parcelForm.controls['depth'])"
                         [label]="'Depth'"></app-text-input>
                 </div>
             </div>
-            <div>
 
-                <td class="dim-image hide-sm" valign="TOP">
-                    
-                    <span class="dims-display">{{parcelForm.get('height')?.value}} x 
-                        {{parcelForm.get('width')?.value}} x 
-                        {{parcelForm.get('depth')?.value}} cm³</span>
-                    <img src="assets/axis-arrow.svg" style="width: 50px;">
-
-                </td>
-            </div>
             <div class="row" *ngIf="validationErrors">
                 <ul class="text-danger">
                     <li *ngFor="let error of validationErrors">{{error}}</li>
                 </ul>
             </div>
-
-            <button [disabled]="!parcelForm.valid" class="btn btn-primary btn-lg mt-2" type="submit">Check parcel
-                prices</button>
-
         </form>
     </div>
-
+    <div class="col-2 d-flex justify-content-center">
+        <div class="border"></div>
+    </div>
     <div class="col-4 mt-3">
-        <h2>Couriers prices:</h2>
-        <app-courier-list [couriers]="couriers" [parcel]="parcelForm.value"
-            [parcelValid]="parcelForm.valid"></app-courier-list>
+        <h3>Couriers prices:</h3>
+        <app-courier-list *ngIf="this.parcelForm.valid" [couriers]="couriers"
+            [parcel]="parcelForm.value"></app-courier-list>
     </div>
 
 </div>

@@ -1,5 +1,4 @@
 using API.DTOs;
-using API.Entities;
 
 namespace API.Couriers
 {
@@ -23,7 +22,7 @@ namespace API.Couriers
             var dimensionPrice = CalculateDimensionPrice(packageDto);
             var weightPrice = CalculateWeightPrice(packageDto);
 
-            Price = dimensionPrice > weightPrice ? dimensionPrice : weightPrice;
+            Price = Math.Max(dimensionPrice, weightPrice);
         }
     }
 }

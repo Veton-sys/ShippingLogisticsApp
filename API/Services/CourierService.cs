@@ -28,22 +28,21 @@ namespace API.Services
 
         public ServiceResponse<List<Courier>> GetCourierPrices(PackageDto packageDto)
         {
-            List<Courier> couriers = new();
-
-            foreach (Courier c in Couriers)
+            var couriers = Couriers.Where(c => c.ValidateDimension(packageDto) && c.ValidateWeight(packageDto))
+            .Select(c =>
             {
-                if (c.ValidateDimension(packageDto) && c.ValidateWeight(packageDto))
-                {
-                    c.CalculatePrice(packageDto);
-                    couriers.Add(c);
-                }
-            }
-            return new ServiceResponse<List<Courier>>{ Data = couriers };
+                c.CalculatePrice(packageDto);
+                return c;
+            })
+            .ToList();
+
+            return new ServiceResponse<List<Courier>> { Data = couriers };
+
         }
 
         public async Task<ServiceResponse<bool>> MakeOrder(OrderDto orderDto)
         {
-             var order = new Order
+            var order = new Order
             {
                 Package = new Package
                 {
@@ -58,7 +57,7 @@ namespace API.Services
             };
 
             await _orderRepository.MakeOrder(order);
-            return new ServiceResponse<bool>{ Data = true, Message = "Order placed successfully" };
+            return new ServiceResponse<bool> { Data = true, Message = "Order placed successfully" };
         }
     }
 }

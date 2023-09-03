@@ -25,6 +25,10 @@ namespace API.Services
             };
         }
 
+        public bool CheckPackageInformation(PackageDto packageDto)
+        {
+            return packageDto.Weight <= 0 || packageDto.Height <= 0 || packageDto.Width <= 0 || packageDto.Depth <= 0;
+        }
 
         public ServiceResponse<List<Courier>> GetCourierPrices(PackageDto packageDto)
         {
@@ -37,7 +41,6 @@ namespace API.Services
             .ToList();
 
             return new ServiceResponse<List<Courier>> { Data = couriers };
-
         }
 
         public async Task<ServiceResponse<bool>> MakeOrder(OrderDto orderDto)

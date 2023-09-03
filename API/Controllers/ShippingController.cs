@@ -21,17 +21,27 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult<ServiceResponse<List<Courier>>> CalculateCourierPrices([FromQuery]PackageDto packageDto)
         {
-            //validation if package has values if not reutnr bad request and message in serviceRes
+            if (_courierService.CheckPackageInformation(packageDto))
+            {
+                return BadRequest("Package information not set correctly");
+            }
             var result = _courierService.GetCourierPrices(packageDto);
+            if (!result.Success)
+            {
+                result.Message = "Couriers couldn't be retrieved";
+                return BadRequest(result);
+            }
             return Ok(result);
         }
+
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<bool>>> MakeOrder(OrderDto orderDto)
         {
-            //validation
-            // maybe global exception handler
-            //maybe unit test per dicka shif
+            if (_courierService.CheckPackageInformation(orderDto.PackageDto))
+            {
+                return BadRequest("Package information not set correctly");
+            }
             var result = await _courierService.MakeOrder(orderDto);
             if(!result.Success)
             {

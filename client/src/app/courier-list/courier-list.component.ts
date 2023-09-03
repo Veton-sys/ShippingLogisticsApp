@@ -4,6 +4,7 @@ import { CourierService } from '../_services/courier.service';
 import { Parcel } from '../_models/parcel';
 import { Order } from '../_models/order';
 import { ToastrService } from 'ngx-toastr';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-courier-list',
@@ -14,6 +15,7 @@ export class CourierListComponent {
 
   @Input() couriers: Courier[] = [];
   @Input() parcel: Parcel | undefined;
+  @Output() orderPlaced = new EventEmitter<string>();
 
   baseUrl = 'https://localhost:5001/api/';
 
@@ -31,11 +33,12 @@ export class CourierListComponent {
 
     this.courierService.makeOrder(order).subscribe({
       next: response => {
-        this.toastr.success(response.message)
+        this.toastr.success(response.message);
+        this.orderPlaced.emit();
         this.clearCouriers();
       },
-      error: error => this.toastr.success(error.message),
-    });;
+      error: error => this.toastr.error(error.error.message),
+    });
 
   }
 

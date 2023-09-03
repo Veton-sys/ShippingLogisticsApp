@@ -39,6 +39,10 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  resetForm(){
+    this.initializeForm();
+  }
+  
   detectFormChange() {
     this.parcelForm.valueChanges.subscribe(res => {
       console.log(res);

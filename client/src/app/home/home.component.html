@@ -2,9 +2,8 @@
     <div class="col-5 mt-3">
         <h3>Package information:</h3>
 
-        <form [formGroup]="parcelForm" class="row mb-3" (ngSubmit)="parcelForm.valid && getCourierPrices()"
+        <form [formGroup]="parcelForm" class="row mb-3 border border-2 p-4" (ngSubmit)="parcelForm.valid && getCourierPrices()"
             autocomplete="off">
-
             <div>
                 <span class="fw-bold">Weight in kg: {{parcelForm.get('weight')?.value}}</span>
                 <mat-slider class="w-100" min="1" max="30" color="accent" discrete="true">
@@ -45,7 +44,7 @@
     <div class="col-4 mt-3">
         <h3>Couriers prices:</h3>
         <app-courier-list *ngIf="this.parcelForm.valid" [couriers]="couriers"
-            [parcel]="parcelForm.value"></app-courier-list>
+            [parcel]="parcelForm.value" (orderPlaced)="resetForm()"></app-courier-list>
     </div>
 
 </div>

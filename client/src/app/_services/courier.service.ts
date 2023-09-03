@@ -1,10 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Parcel } from '../_models/parcel';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Courier } from '../_models/courier';
 import { Order } from '../_models/order';
 import { ServiceResponse } from '../_models/serviceResponse';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { ServiceResponse } from '../_models/serviceResponse';
 export class CourierService {
   baseUrl = 'https://localhost:5001/api/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   getCourierPrices(parcel: Parcel){
     let params = new HttpParams();
@@ -24,11 +25,7 @@ export class CourierService {
     return this.http.get<ServiceResponse<Courier[]>>(this.baseUrl + 'shipping', { params: params });
   }
 
-  makeOrder(order: Order){
-    this.http.post<ServiceResponse<boolean>>(this.baseUrl + 'shipping', order).subscribe({
-      next: _ => console.log("worked"),
-      error: _ => console.log("error"),
-    });
-    
+  makeOrder(order: Order): Observable<ServiceResponse<boolean>>{
+    return this.http.post<ServiceResponse<boolean>>(this.baseUrl + 'shipping', order);
   }
 }

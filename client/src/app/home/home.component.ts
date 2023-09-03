@@ -1,7 +1,6 @@
-import { Component, OnInit, Self } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CourierService } from '../_services/courier.service';
-import { Parcel } from '../_models/parcel';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Courier } from '../_models/courier';
 
 @Component({
@@ -10,7 +9,7 @@ import { Courier } from '../_models/courier';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  selectedValue=1;
   couriers: Courier[] = [];
   parcelForm: FormGroup = new FormGroup({});
   validationErrors: string[] | undefined;

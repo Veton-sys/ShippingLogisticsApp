@@ -58,7 +58,7 @@ namespace API.Services
             };
 
             await _orderRepository.MakeOrder(order);
-            return new ServiceResponse<bool>{ Data = true };
+            return new ServiceResponse<bool>{ Data = true, Message = "Order placed successfully" };
         }
     }
 }

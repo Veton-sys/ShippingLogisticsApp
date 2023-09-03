@@ -30,8 +30,18 @@ export class CourierListComponent {
       orderDate: new Date()
     }
 
-    this.courierService.makeOrder(order);
+    this.courierService.makeOrder(order).subscribe({
+      next: response => {
+        this.toastr.success(response.message)
+        this.clearCouriers();
+      },
+      error: error => this.toastr.success(error.message),
+    });;
 
+  }
+
+  clearCouriers(){
+    this.couriers = [];
   }
 
 }

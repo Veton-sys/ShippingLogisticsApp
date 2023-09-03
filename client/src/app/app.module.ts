@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { CourierListComponent } from './courier-list/courier-list.component';
 import { ToastrModule } from 'ngx-toastr';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatSliderModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     })

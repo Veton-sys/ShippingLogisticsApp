@@ -6,7 +6,7 @@ namespace API.Interfaces
 {
     public interface ICourierService
     {
-        List<Courier> GetCourierPrices(PackageDto packageDto);
-        void MakeOrder(OrderDto orderDto);
+        ServiceResponse<List<Courier>> GetCourierPrices(PackageDto packageDto);
+        Task<ServiceResponse<bool>> MakeOrder(OrderDto orderDto);
     }
 }

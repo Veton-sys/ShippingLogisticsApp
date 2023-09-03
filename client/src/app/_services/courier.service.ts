@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Parcel } from '../_models/parcel';
 import { map } from 'rxjs';
 import { Courier } from '../_models/courier';
+import { Order } from '../_models/order';
+import { ServiceResponse } from '../_models/serviceResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,20 @@ export class CourierService {
   constructor(private http: HttpClient) { }
 
   getCourierPrices(parcel: Parcel){
-    return this.http.post<Courier[]>(this.baseUrl + 'shipping', parcel);
+    let params = new HttpParams();
+    params = params.append("weight", parcel.weight)
+    params = params.append("height", parcel.height)
+    params = params.append("width", parcel.width)
+    params = params.append("depth", parcel.depth)
+    
+    return this.http.get<ServiceResponse<Courier[]>>(this.baseUrl + 'shipping', { params: params });
   }
 
-  
+  makeOrder(order: Order){
+    this.http.post<ServiceResponse<boolean>>(this.baseUrl + 'shipping', order).subscribe({
+      next: _ => console.log("worked"),
+      error: _ => console.log("error"),
+    });
+    
+  }
 }

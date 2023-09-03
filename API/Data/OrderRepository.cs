@@ -15,22 +15,11 @@ namespace API.Data
         {
             _context = context;
         }
-        public void MakeOrder(OrderDto orderDto)
+        public async Task<ServiceResponse<bool>> MakeOrder(Order order)
         {
-            var order = new Order
-            {
-                Package = new Package
-                {
-                    Weight = orderDto.PackageDto.Weight,
-                    Height = orderDto.PackageDto.Height,
-                    Width = orderDto.PackageDto.Width,
-                    Depth = orderDto.PackageDto.Depth
-                },
-                OrderDate = DateTime.Now,
-                Courier = orderDto.Courier
-            };
             _context.Orders.Add(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<bool>{ Data = true };
         }
     }
 }

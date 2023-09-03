@@ -18,5 +18,5 @@
 </div>
 
 <div class="container mt-3" *ngIf="couriers">
-    <app-courier-list [couriers]="couriers"></app-courier-list>
+    <app-courier-list [couriers]="couriers" [parcel]="parcelForm.value" [parcelValid]="parcelForm.valid"></app-courier-list>
 </div>

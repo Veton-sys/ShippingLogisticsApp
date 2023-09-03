@@ -1,5 +1,12 @@
-<div class="row">
+<div class="row" *ngIf="couriers.length > 0 && parcel">
     <div>
-        <p *ngFor="let courier of couriers">Courier info - {{courier.name}}, {{courier.price}}</p>
+        <ul class="list-group col-6">
+            Couriers prices:
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let courier of couriers">
+                <span>{{courier.name}}</span>
+                <span>{{courier.price}}</span>
+                <button class="btn btn-success" [disabled]="!parcelValid" (click)="makeOrder(courier, parcel)">Order</button>
+            </li>
+        </ul>
     </div>
 </div>

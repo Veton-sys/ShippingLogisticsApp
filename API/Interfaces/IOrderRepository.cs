@@ -1,10 +1,11 @@
 using API.Data;
 using API.DTOs;
+using API.Entities;
 
 namespace API.Interfaces
 {
     public interface IOrderRepository
     {
-        void MakeOrder(OrderDto orderDto);
+        Task<ServiceResponse<bool>> MakeOrder(Order order);
     }
 }

@@ -18,16 +18,21 @@ namespace API.Controllers
             _courierService = courierService;
         }
 
-        [HttpPost]
-        public ActionResult<List<Courier>> CalculateCourierPrices([FromBody]PackageDto packageDto)
+        [HttpGet]
+        public ActionResult<ServiceResponse<List<Courier>>> CalculateCourierPrices([FromQuery]PackageDto packageDto)
         {
-            return Ok(_courierService.GetCourierPrices(packageDto));
+            //validation if package has values if not reutnr bad request and message in serviceRes
+            var result = _courierService.GetCourierPrices(packageDto);
+            return Ok(result);
         }
 
-        [HttpPost("make-order")]
-        public void MakeOrder(OrderDto orderDto)
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<bool>>> MakeOrder(OrderDto orderDto)
         {
-            _courierService.MakeOrder(orderDto);
+            //validation
+            
+            var result = await _courierService.MakeOrder(orderDto);
+            return Ok(result);
         }
     }
 }

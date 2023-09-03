@@ -26,7 +26,7 @@ namespace API.Services
         }
 
 
-        public List<Courier> GetCourierPrices(PackageDto packageDto)
+        public ServiceResponse<List<Courier>> GetCourierPrices(PackageDto packageDto)
         {
             List<Courier> couriers = new();
 
@@ -38,12 +38,27 @@ namespace API.Services
                     couriers.Add(c);
                 }
             }
-            return couriers;
+            return new ServiceResponse<List<Courier>>{ Data = couriers };
         }
 
-        public void MakeOrder(OrderDto orderDto)
+        public async Task<ServiceResponse<bool>> MakeOrder(OrderDto orderDto)
         {
-            _orderRepository.MakeOrder(orderDto);
+             var order = new Order
+            {
+                Package = new Package
+                {
+                    Weight = orderDto.PackageDto.Weight,
+                    Height = orderDto.PackageDto.Height,
+                    Width = orderDto.PackageDto.Width,
+                    Depth = orderDto.PackageDto.Depth
+                },
+                OrderDate = DateTime.Now,
+                CourierName = orderDto.CourierName,
+                CourierPrice = orderDto.CourierPrice,
+            };
+
+            await _orderRepository.MakeOrder(order);
+            return new ServiceResponse<bool>{ Data = true };
         }
     }
 }

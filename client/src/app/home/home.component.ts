@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   getCourierPrices() {
     return this.courierService.getCourierPrices(this.parcelForm.value).subscribe({
-      next: response => this.couriers = response,
+      next: response => this.couriers = response.data,
       error: error => this.validationErrors = error
     })
   }

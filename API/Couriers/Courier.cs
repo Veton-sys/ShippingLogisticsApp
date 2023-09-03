@@ -8,6 +8,7 @@ namespace API.Couriers
         public Courier(string name)
         {
             Name = name;
+            Price = 0;
         }
         public string Name { get; set; }
 
